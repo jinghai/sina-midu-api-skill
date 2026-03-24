@@ -96,10 +96,12 @@ curl --request POST \
 - 每条记录都是独立 JSON
 - 常见关键字段：
   - 外层：`data`、`offset`
+  - 内容主字段：`author`、`title`、`text`、`publishTime`、`url`、`column`、`nerInfoExt`
   - 命中信息：`matchInfo.ticket`、`matchInfo.name`、`matchInfo.info`
-  - 内容信息：`author`、`title`、`text`、`publishTime`、`url`
-  - 扩展信息：`contentExt`、`userExt`、`videoExt`
-- 实测样本中还出现了 `originTypeThird`、`adFake`、`aiIdentify`、`ipLocation`、`mediaInfoType`、`contentPublishTime` 等扩展字段，解析时应保持兼容
+  - 用户信息：`userExt.accountNum`、`userExt.userId`、`userExt.accountVerifyInfo`、`userExt.mcnName`
+  - 内容扩展：`contentExt`、`videoExt`
+- 实测样本确认 `images` 位于 `data.contentExt.images`，`ocrContents` 位于 `data.contentExt.ocrContents`，不是直接位于 `data` 根层级
+- 实测样本中还出现了 `originTypeThird`、`adFake`、`aiIdentify`、`ipLocation`、`mediaInfoType`、`contentPublishTime`、`annotations`、`plateName`、`praiseNum`、`viewNum`、`wxBiz` 等扩展字段，解析时应保持兼容
 
 ## Common Error Codes
 
