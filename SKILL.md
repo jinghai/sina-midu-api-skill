@@ -37,9 +37,9 @@ description: "Use when integrating Sina Midu public-opinion subscription APIs, g
 
 | 参数 | 说明 |
 | :--- | :--- |
-| `appId` | 账号标识 |
-| `appSecret` | 账号密钥 |
-| `ticket` | 订阅方案标识 |
+| `appId` | 账号标识，开通表字段通常为 `appId` |
+| `appSecret` | 账号密钥，开通表字段通常为 `授权密钥` |
+| `ticket` | 内容同步时使用的 ticket，开通表字段通常为 `内容数据池ticket` |
 | IP 白名单 | 如果接口开启 IP 限制则必须配置 |
 
 ## Call Flow
@@ -49,6 +49,11 @@ description: "Use when integrating Sina Midu public-opinion subscription APIs, g
 2. 调用 token 接口获取 `accessToken`
 3. 使用 `accessToken + ticket + offset` 持续拉取数据
 4. 保存最后一条记录的 `offset + 1` 作为下次请求位点
+
+字段选择规则：
+
+- 如果账号资料来自开通表，内容同步优先使用 `内容数据池ticket`
+- 不要把 `列表/统计接口方案ticket` 当作内容拉取 ticket 使用
 
 ## Curl Examples
 
@@ -94,6 +99,7 @@ curl --request POST \
   - 命中信息：`matchInfo.ticket`、`matchInfo.name`、`matchInfo.info`
   - 内容信息：`author`、`title`、`text`、`publishTime`、`url`
   - 扩展信息：`contentExt`、`userExt`、`videoExt`
+- 实测样本中还出现了 `originTypeThird`、`adFake`、`aiIdentify`、`ipLocation`、`mediaInfoType`、`contentPublishTime` 等扩展字段，解析时应保持兼容
 
 ## Common Error Codes
 
